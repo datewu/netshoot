@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.11
 
 RUN set -ex \
     && echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
@@ -75,5 +75,6 @@ RUN wget https://github.com/gcla/termshark/releases/download/v${TERMSHARK_VERSIO
 # Settings
 ADD motd /etc/motd
 ADD profile  /etc/profile
+COPY k8s /opt
 
 CMD ["/bin/bash","-l"]
