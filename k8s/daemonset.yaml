@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1                                                                                                                                                      
+kind: DaemonSet                                                                                                                                                                    
+metadata:                                                                                                                                                                           
+  labels:                                                                                                                                                                           
+    run: net-shoot                                                                                                                                                                  
+  name: net-shoot                                                                                                                                                                   
+spec:                                                                                                                                                                               
+  #progressDeadlineSeconds: 600                                                                                                                                                      
+  selector:
+    matchLabels:
+      run: net-shoot
+  template:
+    metadata:
+      labels:
+        run: net-shoot
+    spec:
+      containers:
+      - args:
+        - -f
+        - /dev/null
+        command:
+        - tail
+        image: datewu/netshoot:latest
+        imagePullPolicy: Always
+        name: net-shoot
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
